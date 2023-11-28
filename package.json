@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "electron": "^27.1.2"
+  },
+  "name": "appentrenamiento",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

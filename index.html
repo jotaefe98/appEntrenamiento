@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APLICACION DE ENTRENAMIENTO DE ESCALADA</title>
+    <link rel="stylesheet" href="./css/photon.min.css">
+</head>
+<body>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+            <h1 class="title" id="header"> USUARIO</h1>
+        </header>
+        <div class="window-content">
+            <div class="pane-group">
+                <div class="pane">
+                    <div class="padded-more">
+                        <p class="text-center">FEEDBACK</p>   
+                        <div class="form-group">
+                            <label>DNI</label>
+                            <input type="text" id="dni">
+                        </div>
+                        <div class="form-group">
+                            <label>NOMBRE</label>
+                            <input type="text" id="nombre" disabled>
+                        </div>  
+                        <div class="form-group">
+                            <label>DIA</label>
+                            <input type="texto" id="dia" placeholder="--/--/--" disabled >
+                        </div>    
+                        <div class="form-group">
+                            <label>TIPO DE ENTRENAMIENTO</label>
+                            <select id="tipo-entrenamiento" disabled>
+                                <option value="default"></option>
+                                <option value="suspensiones">suspensiones</option>
+                                <option value="tracciones">tracciones</option>
+                                <option value="movimientos">movimientos</option>
+                                <option value="carrera">carrera</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label >DESCRIPCION</label>
+                                <textarea  class="form-control" id="descripcion" cols="30" rows="5" disabled></textarea>                           
+                        </div>
+                        <p>
+                            <button class="btn btn-primary" id="borrar" disabled >BORRAR</button>
+                            <button class="btn btn-primary" id="actualizar" disabled >ACTUALIZAR</button>
+                            <button class="btn btn-primary" id="guardar" disabled >GUARDAR</button>
+                            <button class="btn btn-primary" id="cambioUsuario" disabled>CAMBIAR USUARIO</button>
+                        </p>             
+                        
+
+                    </div>
+                </div>
+                <div class="pane">
+                    <div class="padded-more">
+                        <p class="text-center">ENTRENAMIENTO DE HOY</p>
+                        <img src="" alt="" style="width: 100%; height: auto;" id="img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./functions.js"></script>
+</body>
+</html>
