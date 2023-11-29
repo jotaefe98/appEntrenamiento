@@ -22,10 +22,6 @@ let dni;
 let nombre;
 let existeDni;
 let posicion;
-let actualizarFichero = () => {
-	fs.writeFileSync('./Usuarios.json', JSON.stringify(usuarios));
-}
-
 
 //Comprobacion del dni
 inputDni.addEventListener('keyup', (evento) => {
@@ -79,7 +75,7 @@ guardar.addEventListener('click',()=>{
 	usuarios[posicion].dia = inputFecha.value
     usuarios[posicion].tipo_entrene = inputEntrenamiento.value
     usuarios[posicion].descripcion = inputDescripcion.value
-	actualizarFichero();
+	fs.writeFileSync('./Usuarios.json', JSON.stringify(usuarios));
 });
 
 //Activa o desactiva los inputs
