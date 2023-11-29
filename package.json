@@ -5,7 +5,9 @@
   "name": "appentrenamiento",
   "version": "1.0.0",
   "main": "main.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^8.54.0"
+  },
   "scripts": {
     "start": "electron ."
   },
