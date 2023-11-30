@@ -76,7 +76,7 @@ cambioUsuario.addEventListener('click',()=>{
 
 //Guarda los values en el JSON(FALTA POR MEJORAR)
 guardar.addEventListener('click',()=>{
-    guardarUsuario()
+    if (sePuedeGuardar()) guardarUsuario()
 });
 
 //Actualizar, la primera vez que se ejecuta controlActualizar es false
@@ -102,7 +102,12 @@ actualizar.addEventListener('click',()=>{
 //Comprueba si se puede guardar y devuelve un boolean
 function sePuedeGuardar(){
     let sePuede;
-        if(inputFecha.value==="" || inputEntrenamiento.value==="" || inputDescripcion.value===""){
+        if(inputDni.value!==usuarios[posicion].dni){
+            dialog.showErrorBox("Atención", "Dni diferente al original ("+usuarios[posicion].dni+")")
+            sePuede=false
+            console.log(usuarios[posicion].dni)
+        }
+        else if(inputFecha.value==="" || inputEntrenamiento.value==="" || inputDescripcion.value===""){
             sePuede=false
             dialog.showErrorBox("Atención", "Falta por rellenar algun campo")
         }else{
@@ -119,6 +124,12 @@ function guardarUsuario(){
     usuarios[posicion].tipo_entrene = inputEntrenamiento.value
     usuarios[posicion].descripcion = inputDescripcion.value
 	fs.writeFileSync('./Usuarios.json', JSON.stringify(usuarios));
+    dialog.showMessageBox({
+        type: 'info',
+        title: 'Guardado Exitoso',
+        message: `El archivo se ha guardado exitosamente.`,
+        buttons: ['Aceptar']
+      })
 }
 
 //Activa o desactiva los inputs (true = desactivado)
