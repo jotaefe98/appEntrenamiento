@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@electron/remote": "^2.1.0",
     "electron": "^27.1.2"
   },
   "name": "appentrenamiento",

@@ -5,7 +5,7 @@ let usuarios = new Array();
 usuarios = JSON.parse(fichero);
 
 //Ventana de dialogo
-const { dialog } = require('@electron/remote')
+const { dialog } = require('@electron/remote');
 
 //Declaracion de constantes
 const inputDni = document.getElementById('dni');
@@ -25,6 +25,7 @@ let dni;
 let nombre;
 let existeDni;
 let posicion;
+let controlActualizar = false;
 
 //Comprobacion del dni
 inputDni.addEventListener('keyup', (evento) => {
@@ -75,41 +76,81 @@ cambioUsuario.addEventListener('click',()=>{
 
 //Guarda los values en el JSON(FALTA POR MEJORAR)
 guardar.addEventListener('click',()=>{
+    guardarUsuario()
+});
+
+//Actualizar, la primera vez que se ejecuta controlActualizar es false
+actualizar.addEventListener('click',()=>{
+    if(!controlActualizar){
+        inputDni.disabled=true;
+        cambiarEstadoBotones(true,false)
+        actualizar.classList.remove("btn-primary")
+        actualizar.classList.add("btn-positive")
+        controlActualizar=true;
+    }else{
+        if (sePuedeGuardar()) {
+            guardarUsuario()
+            actualizar.classList.remove("btn-positive")
+            actualizar.classList.add("btn-primary")
+            inputDni.disabled=false;
+            cambiarEstadoBotones(false,false)
+            controlActualizar=false;
+        }         
+    }
+});
+
+//Comprueba si se puede guardar y devuelve un boolean
+function sePuedeGuardar(){
+    let sePuede;
+        if(inputFecha.value==="" || inputEntrenamiento.value==="" || inputDescripcion.value===""){
+            sePuede=false
+            dialog.showErrorBox("Atención", "Falta por rellenar algun campo")
+        }else{
+            sePuede=true
+        }
+        return sePuede
+}
+
+//Guarda los usuarios en el JSON
+function guardarUsuario(){
     usuarios[posicion].dni = inputDni.value
 	usuarios[posicion].nombre = inputNombre.value
 	usuarios[posicion].dia = inputFecha.value
     usuarios[posicion].tipo_entrene = inputEntrenamiento.value
     usuarios[posicion].descripcion = inputDescripcion.value
 	fs.writeFileSync('./Usuarios.json', JSON.stringify(usuarios));
-});
-
-//Actualizar
-
+}
 
 //Activa o desactiva los inputs (true = desactivado)
 function cambiarEstado(estado){
 
-    let clase1 = estado ? "btn-default" : "btn-primary";
-    let clase2 = estado ? "btn-primary" : "btn-default";
-
     inputFecha.disabled = estado;
     inputEntrenamiento.disabled = estado;
     inputDescripcion.disabled = estado;
-    borrar.disabled = estado;
-    guardar.disabled = estado;
     actualizar.disabled = estado;
-    cambioUsuario.disabled = estado;
+    cambiarEstadoBotones(estado,true)
+}
 
-    borrar.classList.remove("btn",clase2)
-    guardar.classList.remove("btn",clase2)
-    actualizar.classList.remove("btn",clase2)
-    cambioUsuario.classList.remove("btn",clase2)
+//Cambia los botones de estado segun estado(true = desactivado), y si los apaga todos
+function cambiarEstadoBotones(estado,apagarTodos){
 
-    borrar.classList.add("btn",clase1)
-    guardar.classList.add("btn",clase1)
-    actualizar.classList.add("btn",clase1)
-    cambioUsuario.classList.add("btn",clase1)
+    let clase1 = estado ? "btn-default" : "btn-primary";
+    let clase2 = estado ? "btn-primary" : "btn-default";
+    if(apagarTodos){
+        actualizar.classList.remove("btn",clase2)
+        actualizar.classList.add("btn",clase1)
+    }
+        borrar.classList.remove("btn",clase2)
+        guardar.classList.remove("btn",clase2)
+        cambioUsuario.classList.remove("btn",clase2)
 
+        borrar.classList.add("btn",clase1)
+        guardar.classList.add("btn",clase1)
+        cambioUsuario.classList.add("btn",clase1)
+
+        borrar.disabled = estado;
+        guardar.disabled = estado;
+        cambioUsuario.disabled = estado;
 }
 
 //Borra todos los campos menos DNI
