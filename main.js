@@ -1,4 +1,5 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, dialog} = require('electron')
+require('@electron/remote/main').initialize()
 
 let mainWindow
 
@@ -14,6 +15,8 @@ function createWindow () {
     }
   })
 
+  require("@electron/remote/main").enable(mainWindow.webContents) 
+  
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 

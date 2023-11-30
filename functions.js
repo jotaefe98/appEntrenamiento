@@ -4,6 +4,9 @@ let fichero = fs.readFileSync('Usuarios.json')
 let usuarios = new Array();
 usuarios = JSON.parse(fichero);
 
+//Ventana de dialogo
+const { dialog } = require('@electron/remote')
+
 //Declaracion de constantes
 const inputDni = document.getElementById('dni');
 const inputNombre = document.getElementById('nombre');
@@ -50,6 +53,8 @@ inputDni.addEventListener('keyup', (evento) => {
             // El formato del DNI no es válido
             cambiarEstado(true);
             borrarCampos(true);
+            dialog.showErrorBox("Atención", "DNI Incorrecto")
+
         }
     }
     
@@ -78,8 +83,15 @@ guardar.addEventListener('click',()=>{
 	fs.writeFileSync('./Usuarios.json', JSON.stringify(usuarios));
 });
 
-//Activa o desactiva los inputs
+//Actualizar
+
+
+//Activa o desactiva los inputs (true = desactivado)
 function cambiarEstado(estado){
+
+    let clase1 = estado ? "btn-default" : "btn-primary";
+    let clase2 = estado ? "btn-primary" : "btn-default";
+
     inputFecha.disabled = estado;
     inputEntrenamiento.disabled = estado;
     inputDescripcion.disabled = estado;
@@ -87,6 +99,17 @@ function cambiarEstado(estado){
     guardar.disabled = estado;
     actualizar.disabled = estado;
     cambioUsuario.disabled = estado;
+
+    borrar.classList.remove("btn",clase2)
+    guardar.classList.remove("btn",clase2)
+    actualizar.classList.remove("btn",clase2)
+    cambioUsuario.classList.remove("btn",clase2)
+
+    borrar.classList.add("btn",clase1)
+    guardar.classList.add("btn",clase1)
+    actualizar.classList.add("btn",clase1)
+    cambioUsuario.classList.add("btn",clase1)
+
 }
 
 //Borra todos los campos menos DNI
